@@ -41,9 +41,29 @@ button {
     color: white;
 }
 
+#yesBtn:hover {
+    transform: scale(1.1);
+}
+
 #noBtn {
     background: #ddd;
     position: absolute;
+}
+
+/* ❤️ Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    color: #ff4d6d;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh) translateX(40px);
+        opacity: 0;
+    }
 }
 </style>
 </head>
@@ -60,7 +80,7 @@ button {
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 
-// Make "No" button run away from cursor
+/* Make "No" button run away */
 noBtn.addEventListener("mouseover", () => {
     const x = Math.random() * (window.innerWidth - 100);
     const y = Math.random() * (window.innerHeight - 50);
@@ -69,11 +89,29 @@ noBtn.addEventListener("mouseover", () => {
     noBtn.style.top = y + "px";
 });
 
-// When clicking YES
+/* Create floating hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 6000);
+}
+
+/* When clicking YES */
 yesBtn.addEventListener("click", () => {
+
+    // Replace page with success message
     document.body.innerHTML = `
         <div style="
             display:flex;
+            flex-direction:column;
             justify-content:center;
             align-items:center;
             height:100vh;
@@ -85,6 +123,9 @@ yesBtn.addEventListener("click", () => {
             YAYYY 💕<br>You made me the happiest person 😭❤️
         </div>
     `;
+
+    // Start heart animation
+    setInterval(createHeart, 300);
 });
 </script>
 
